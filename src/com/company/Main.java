@@ -11,12 +11,19 @@ public class Main {
     private static File libraryFile = new File("Library.txt");
 
     public static void main(String[] args) {
-        int numberOfBooks = Integer.parseInt(getInput("Enter number of books to store: "));
-        for (int i = 0; i < numberOfBooks; i++) {
-            WriteToFile(getBookInfo());
+        char task;
+        String book;
+        while(true) {
+            task = getInput("Enter 'a' to add new books, 'b' to search for a book: ").charAt(0);
+            switch(task){
+                case 'a':
+                    WriteToFile(getBookInfo());
+                    break;
+                case 'b':
+                    book = getInput("Enter title of book to find: ").toLowerCase();
+                    System.out.println(searchForBook(book));
+            }
         }
-
-        System.out.println(searchForBook("among us guide")); // search is done implement properly
 
     }
 
@@ -32,19 +39,6 @@ public class Main {
         Scanner input = new Scanner(System.in);
         System.out.print(prompt);
         return input.nextLine();
-    }
-
-    public static void CreateFile() {
-        try {
-            if (libraryFile.createNewFile()) {
-                System.out.println("File created: " + libraryFile.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
     }
 
     public static void WriteToFile(String contents) {
@@ -65,7 +59,7 @@ public class Main {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 String[] fileLine = data.split(",");
-                if(fileLine[0].equals(bookTitle)){
+                if(fileLine[0].toLowerCase().equals(bookTitle)){
                     return data;
                 }
             }
