@@ -35,7 +35,7 @@ public class Main {
         return (bookTitle + "," + ISBN + "," + author + "," + genre + "\n");
     }
 
-    public static String getInput(String prompt){
+    public static String getInput(String prompt) {
         Scanner input = new Scanner(System.in);
         System.out.print(prompt);
         return input.nextLine();
