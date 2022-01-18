@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -11,6 +12,7 @@ public class Main {
     //There are unused methods
     private static File libraryFile = new File("Library.txt");
     private static final File loginFile = new File("Login.txt");
+    public static Book books = new Book(libraryFile);
 
     public static void main(String[] args) {
         login();
@@ -20,13 +22,21 @@ public class Main {
             action = getInput("1 - borrow a book\n2 - return a book\n3 - log out\nEnter action: ");
             switch (action){
                 case "1":
-
+                    borrow();
                 case "2":
 
+                case "3":
+                    System.out.println("Logging out");
+                    break;
                 default:
                     System.out.println("Invalid");
             }
         }
+
+    }
+
+    public static void borrow(){
+        String book = getInput("Enter book you would like to borrow: ");
 
     }
 
