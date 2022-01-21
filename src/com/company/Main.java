@@ -22,8 +22,9 @@ public class Main {
             switch (action){
                 case "1":
                     borrow();
+                    break;
                 case "2":
-
+                    break;
                 case "3":
                     System.out.println("Logging out");
                     break;
