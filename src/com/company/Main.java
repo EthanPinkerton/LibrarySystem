@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -12,12 +11,12 @@ public class Main {
     //There are unused methods
     private static File libraryFile = new File("Library.txt");
     private static final File loginFile = new File("Login.txt");
-    public static Book books = new Book(libraryFile);
+    private static Book[] books = getBooks();
 
     public static void main(String[] args) {
         login();
-        String action = "0";
 
+        String action = "0";
         while(!action.equals("3")) {
             action = getInput("1 - borrow a book\n2 - return a book\n3 - log out\nEnter action: ");
             switch (action){
@@ -32,12 +31,11 @@ public class Main {
                     System.out.println("Invalid");
             }
         }
-
     }
 
     public static void borrow(){
         String book = getInput("Enter book you would like to borrow: ");
-
+        searchForBook(book);
     }
 
     public static void bookObjects() throws FileNotFoundException {
@@ -48,22 +46,10 @@ public class Main {
         }
     }
 
-    public static String searchForBook(String bookTitle){
-        try {
-            Scanner myReader = new Scanner(libraryFile);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                String[] fileLine = data.split(",");
-                if(fileLine[0].toLowerCase().equals(bookTitle)){
-                    return data;
-                }
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+    public static void searchForBook(String bookTitle){
+        for (int i = 0; i < books.length; i++) {
+            return;
         }
-        return "null";
     }
 
     public static void login(){
@@ -107,7 +93,7 @@ public class Main {
     public static void WriteToFile(String contents,boolean append) {
         try {
             FileWriter myWriter = new FileWriter(loginFile.getName(), append); //True means append to file contents, False means overwrite
-            myWriter.write(contents); // Overwrites everything in the file
+            myWriter.write(contents);
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
@@ -139,5 +125,22 @@ public class Main {
         Scanner input = new Scanner(System.in);
         System.out.print(prompt);
         return input.nextLine();
+    }
+
+    public static Book[] getBooks(){
+        try {
+            Scanner myReader = new Scanner(libraryFile);
+            Book[] books = new Book[(int) libraryFile.length()];
+            for (int i = 0; i < libraryFile.length(); i++) {
+                String data = myReader.nextLine();
+                String[] fileLine = data.split(",");
+                books[i] = new Book(fileLine[0],fileLine[1],fileLine[2],fileLine[3]);
+                return books;
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return getBooks();
     }
 }
